@@ -1,14 +1,21 @@
-import { MongoClient } from 'mongodb';
+const { MongoClient } = require('mongodb');
 
 const client = new MongoClient(process.env.MONGODB_URI);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+
   const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ error: 'Query parameter required' });
+  }
 
   try {
     await client.connect();
     const db = client.db('records');
+    
     const results = await db.collection('sanctions').aggregate([
       {
         $search: {
@@ -22,8 +29,8 @@ export default async function handler(req, res) {
       { $limit: 20 }
     ]).toArray();
 
-    res.status(200).json(results);
+    return res.status(200).json(results);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
-}
+};
