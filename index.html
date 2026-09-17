@@ -114,19 +114,21 @@ td:first-child,td:nth-child(2){color:var(--navy);font-weight:600}
 /* ---------- drawer ---------- */
 .scrim{position:fixed;inset:0;background:rgba(10,15,20,.5);z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
 .scrim.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:#fff;border-left:1px solid var(--border);z-index:70;transform:translateX(100%);transition:transform .22s cubic-bezier(.3,.8,.4,1);display:flex;flex-direction:column}
-.drawer.on{transform:none}
-.dhead{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--navy);color:#fff;display:flex;gap:14px;align-items:flex-start}
+.drawer{position:fixed;top:50%;left:50%;width:min(380px,92vw);max-height:85vh;background:#fff;border-radius:10px;box-shadow:0 14px 40px rgba(0,0,0,.25);z-index:70;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.96);transition:opacity .18s,transform .18s;display:flex;flex-direction:column;overflow:hidden}
+.drawer.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.dhead{padding:16px 18px;border-bottom:1px solid var(--border);background:var(--navy);color:#fff;display:flex;gap:14px;align-items:flex-start;flex-shrink:0}
 .dhead h4{font-size:12.5px;font-weight:500;opacity:.85;margin-bottom:3px}
-.dhead .no{font-size:19px;font-weight:800}
-.close{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:6px;width:32px;height:32px;font-size:17px;margin-left:auto}
-.dbody{padding:18px 20px 40px;overflow-y:auto;flex:1}
-.entry{border:1px solid var(--border);border-radius:6px;margin-bottom:14px;overflow:hidden}
-.entry .eh{padding:8px 14px;background:#f4f6f8;font-size:12px;color:#7b8794;font-weight:600}
-.fields{display:grid;grid-template-columns:1fr 1fr}
-.field{padding:12px 14px;border-top:1px solid #eef1f3}
-.field .k{font-size:11px;color:#8a8f94;margin-bottom:3px;text-transform:uppercase;letter-spacing:.03em}
-.field .v{font-size:16px;font-weight:700;color:var(--navy)}
+.dhead .no{font-size:18px;font-weight:800;word-break:break-all}
+.close{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:6px;width:30px;height:30px;font-size:16px;margin-left:auto;flex-shrink:0}
+.dbody{padding:16px 16px 20px;overflow-y:auto;flex:1}
+.record-table-wrap{border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.record-table{width:100%;border-collapse:collapse;font-size:14px}
+.record-table thead th{background:#eef2f6;color:#33475b;padding:10px 14px;text-align:left;font-weight:700;font-size:12.5px;border-bottom:1px solid var(--border)}
+.record-table tbody td{padding:9px 14px;border-bottom:1px solid #eef1f3;font-weight:600}
+.record-table tbody tr:last-child td{border-bottom:0}
+.record-table tbody tr:nth-child(even){background:#fafbfc}
+.record-table td:first-child{color:var(--gold-dark)}
+.record-table td:last-child{color:var(--navy-light)}
 
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:13.5px;z-index:90;opacity:0;pointer-events:none;transition:.18s}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -134,7 +136,9 @@ td:first-child,td:nth-child(2){color:var(--navy);font-weight:600}
   .status{flex-direction:column;align-items:flex-start}
   .search-btn{width:100%}
   .results-header{flex-direction:column;align-items:flex-start}
-  .fields{grid-template-columns:1fr}
+  .drawer{width:92vw}
+  .record-table{font-size:13px}
+  .record-table thead th,.record-table tbody td{padding:8px 10px}
 }
 </style>
 </head>
@@ -487,14 +491,14 @@ function render(){
 function openRecord(gi){
   const grp = LAST.groups[gi]; if(!grp) return;
   $("drawerNo").textContent = grp.sanction || "—";
-  let html = "";
-  grp.rows.forEach((r,ri)=>{
-    html += '<div class="entry"><div class="eh">Entry '+(ri+1)+' of '+grp.rows.length+'</div><div class="fields">';
-    COLS.hidden.forEach(i=>{
-      html += '<div class="field"><div class="k">'+esc(DB.headers[i])+'</div><div class="v">'+(esc(r[i])||"—")+'</div></div>';
-    });
-    html += '</div></div>';
+  const cols = COLS.hidden;
+  let html = '<div class="record-table-wrap"><table class="record-table"><thead><tr>'
+    + cols.map(i=>'<th>'+esc(DB.headers[i])+'</th>').join('')
+    + '</tr></thead><tbody>';
+  grp.rows.forEach(r=>{
+    html += '<tr>' + cols.map(i=>'<td>'+(esc(r[i])||"—")+'</td>').join('') + '</tr>';
   });
+  html += '</tbody></table></div>';
   $("drawerBody").innerHTML = html;
   $("drawer").classList.add("on"); $("scrim").classList.add("on");
 }
