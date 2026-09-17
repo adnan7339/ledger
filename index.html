@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Minister Youth Business &amp; Agriculture — Member Search</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1f4e79; --navy-dark:#173a5c; --navy-light:#2f6f9f;
+  --gold:#c59d5f; --gold-dark:#a98248; --gold-light:#dfc38f;
+  --bg:#f3f5f7; --panel:#ffffff; --ink:#333333; --ink-soft:#7b8794;
+  --border:#dfe3e8; --ok:#28a745; --err:#dc3545; --radius:6px;
+  --shadow:0 4px 18px rgba(0,0,0,.08);
+}
+body{font-family:'Inter',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+[hidden]{display:none!important}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+
+/* ---------- login ---------- */
+.login-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{width:100%;max-width:430px;background:#fff;border:1px solid #e3e6e8;border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,.10);overflow:hidden}
+.login-header{background:#fff;padding:34px 30px 18px;border-bottom:1px solid #eee;text-align:center}
+.login-logo{width:76px;height:76px;margin:0 auto 16px;border-radius:50%;background:#fff;border:1px solid #e4e4e4;color:var(--navy);box-shadow:0 3px 12px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-size:32px}
+.login-title{color:#222;font-size:1.35rem;font-weight:700;margin-bottom:6px}
+.login-subtitle{color:#8a8f94;font-size:.88rem}
+.login-body{padding:26px 30px 32px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;color:#555;font-weight:500;font-size:.88rem;margin-bottom:6px}
+.form-input{width:100%;padding:11px 12px;border:1px solid #d8dde2;border-radius:4px;color:#333;font:inherit;font-size:14.5px}
+.form-input:focus{border-color:var(--navy-light);box-shadow:0 0 0 2px rgba(31,78,121,.12);outline:none}
+.btn-login{width:100%;background:var(--navy);border:1px solid var(--navy-dark);border-radius:4px;color:#fff;padding:13px 16px;font-size:1rem;font-weight:600;box-shadow:0 2px 5px rgba(0,0,0,.12)}
+.btn-login:hover{background:var(--navy-dark)}
+.alert-error{background:#fdecea;color:#b33a3a;border:1px solid #f3c6c2;border-radius:4px;padding:10px 12px;font-size:13px;margin-bottom:16px;display:none}
+.alert-error.show{display:block}
+
+/* ---------- main app ---------- */
+.container{max-width:1180px;margin:0 auto;padding:24px 18px 70px}
+.user-header{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.user-info{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e0e4e8;box-shadow:0 2px 8px rgba(0,0,0,.08);border-radius:8px;padding:10px 16px}
+.user-avatar{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.user-avatar.admin-avatar{background:var(--gold-dark)}
+.user-details h3{font-size:14.5px;color:#333;font-weight:700}
+.user-details p{font-size:12px;color:#888}
+.header-actions{display:flex;gap:10px}
+.btn-admin-panel{background:var(--navy);color:#fff;border:0;border-radius:6px;padding:9px 15px;font-size:13.5px;font-weight:600}
+.btn-logout{background:#fff;color:#b33a3a;border:1px solid #e0caca;border-radius:6px;padding:9px 15px;font-size:13.5px;font-weight:600;box-shadow:0 2px 5px rgba(0,0,0,.06)}
+.btn-logout:hover{background:#fafafa}
+
+.header{text-align:center;margin-bottom:28px}
+.logo{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;background:#fff;border:1px solid #ddd;color:var(--navy);box-shadow:0 5px 18px rgba(0,0,0,.10);display:flex;align-items:center;justify-content:center;font-size:28px}
+.header h1{color:#222;font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.header .subtitle{color:#888;font-size:14px}
+
+.card{background:#fff;border:1px solid #e1e5e8;border-radius:5px;box-shadow:var(--shadow);padding:22px;margin-bottom:20px}
+.card-title{color:var(--navy);font-size:1.05rem;font-weight:800;margin-bottom:14px}
+
+.status{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.status-info{display:flex;align-items:center;gap:14px}
+.status-icon{width:46px;height:46px;border-radius:8px;background:#f1f5f8;border:1px solid #d9e1e8;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.status-text h3{color:var(--navy);font-size:15px;font-weight:700}
+.status-text p{color:#7b8794;font-size:13px;margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600}
+.badge.loading{background:#eef3f7;color:var(--navy)}
+.badge.live{background:#e7f6ea;color:var(--ok)}
+.badge.err{background:#fdecea;color:var(--err)}
+.spinner{width:12px;height:12px;border:2px solid rgba(0,0,0,.15);border-top-color:currentColor;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.action-btn{background:#fff;color:var(--navy);border:1px solid #d8dde2;border-radius:5px;padding:8px 14px;font-size:13px;font-weight:600;box-shadow:0 2px 5px rgba(0,0,0,.06)}
+.action-btn:hover{background:#f5f7f9}
+
+.search-box{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.input-group{flex:1 1 260px}
+.input-group label{display:block;font-size:13px;color:#555;margin-bottom:6px;font-weight:500}
+.input-group select{padding:11px;border:1px solid #d8dde2;border-radius:4px;font:inherit;font-size:14px;background:#fff;margin-bottom:8px;width:100%}
+.input-group input{width:100%;padding:12px 13px;border:1px solid #d8dde2;border-radius:4px;font:inherit;font-size:15px}
+.input-group input:focus{border-color:var(--navy-light);box-shadow:0 0 0 2px rgba(31,78,121,.10);outline:none}
+.search-btn{background:var(--navy);border:1px solid var(--navy-dark);color:#fff;border-radius:4px;padding:13px 26px;font-size:15px;font-weight:700;box-shadow:0 2px 5px rgba(0,0,0,.12)}
+.search-btn:hover{background:var(--navy-dark)}
+.search-btn:disabled{opacity:.55;cursor:not-allowed}
+.hint{margin-top:10px;font-size:13px;color:#7b8794}
+.hint b{color:#333;font-weight:600}
+
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.results-header h2{color:var(--navy);font-size:1.15rem;font-weight:800}
+.count{color:#7b8794;font-size:13.5px}
+.table-wrapper{border:1px solid #dfe3e8;border-radius:5px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+thead{background:linear-gradient(135deg,var(--navy),var(--navy-dark))}
+thead th{color:#fff;padding:11px 14px;text-align:left;font-weight:700;font-size:12.5px;white-space:nowrap}
+tbody td{padding:11px 14px;border-bottom:1px solid #eef1f3;color:#444;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#f6f8fa}
+td:first-child,td:nth-child(2){color:var(--navy);font-weight:600}
+.tag{display:inline-block;background:rgba(197,157,95,.15);color:var(--gold-dark);border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700}
+.view-btn{background:#fff;color:var(--navy);border:1px solid #d8dde2;border-radius:5px;padding:6px 14px;font-size:12.5px;font-weight:700}
+.view-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.state{padding:44px 20px;text-align:center;color:#8a8f94}
+.state h3{color:#444;font-size:15px;margin:8px 0 4px}
+.state .state-icon{font-size:30px}
+
+.src-body .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:14px}
+.src-body label{display:block;font-size:12.5px;color:#7b8794;margin-bottom:5px}
+.src-body input{width:100%;padding:9px 11px;border:1px solid #d8dde2;border-radius:4px;font:inherit;font-size:13.5px}
+.src-body .note{font-size:13px;color:#7b8794;margin-top:14px;line-height:1.6}
+.src-body .note ol{padding-left:18px;margin-top:6px}
+.src-body .note code{background:#f1f3f5;border:1px solid #e1e5e8;padding:1px 5px;border-radius:4px;font-size:12px}
+.row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(10,15,20,.5);z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:#fff;border-left:1px solid var(--border);z-index:70;transform:translateX(100%);transition:transform .22s cubic-bezier(.3,.8,.4,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--navy);color:#fff;display:flex;gap:14px;align-items:flex-start}
+.dhead h4{font-size:12.5px;font-weight:500;opacity:.85;margin-bottom:3px}
+.dhead .no{font-size:19px;font-weight:800}
+.close{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:6px;width:32px;height:32px;font-size:17px;margin-left:auto}
+.dbody{padding:18px 20px 40px;overflow-y:auto;flex:1}
+.entry{border:1px solid var(--border);border-radius:6px;margin-bottom:14px;overflow:hidden}
+.entry .eh{padding:8px 14px;background:#f4f6f8;font-size:12px;color:#7b8794;font-weight:600}
+.fields{display:grid;grid-template-columns:1fr 1fr}
+.field{padding:12px 14px;border-top:1px solid #eef1f3}
+.field .k{font-size:11px;color:#8a8f94;margin-bottom:3px;text-transform:uppercase;letter-spacing:.03em}
+.field .v{font-size:16px;font-weight:700;color:var(--navy)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#222;color:#fff;padding:10px 18px;border-radius:999px;font-size:13.5px;z-index:90;opacity:0;pointer-events:none;transition:.18s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:640px){
+  .status{flex-direction:column;align-items:flex-start}
+  .search-btn{width:100%}
+  .results-header{flex-direction:column;align-items:flex-start}
+  .fields{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="login-container" id="loginContainer">
+  <div class="login-box">
+    <div class="login-header">
+      <div class="login-logo">🔐</div>
+      <h2 class="login-title">PMYBA Member Search</h2>
+      <p class="login-subtitle">Secure Login Required</p>
+    </div>
+    <div class="login-body">
+      <div class="alert-error" id="loginError"></div>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" id="username" class="form-input" placeholder="Enter username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <button class="btn-login" id="loginBtn">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div class="container" id="mainApp" hidden>
+
+  <div class="user-header">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <div class="user-details">
+        <h3 id="displayUsername">User</h3>
+        <p id="displayRole">Member Search Access</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-logout" id="logoutBtn">🚪 Logout</button>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="logo">🔍</div>
+    <h1>Prime Minister Youth Business &amp; Agriculture</h1>
+    <p class="subtitle">Member Record Search — CNIC &amp; Sanction No</p>
+  </div>
+
+  <div class="card">
+    <div class="status">
+      <div class="status-info">
+        <div class="status-icon">📊</div>
+        <div class="status-text">
+          <h3>Database Connection</h3>
+          <p id="statusInfo">Initializing connection…</p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="action-btn" id="refreshBtn">🔄 Refresh</button>
+        <div class="badge loading" id="statusBadge"><span class="spinner"></span><span>Loading</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <h2 class="card-title">Search by CNIC or Sanction No</h2>
+    <div class="search-box">
+      <div class="input-group">
+        <label for="mode">Field</label>
+        <select id="mode">
+          <option value="auto">Auto detect</option>
+          <option value="cnic">CNIC</option>
+          <option value="sanction">Sanction no</option>
+        </select>
+        <input type="text" id="q" placeholder="e.g. 1610112345678 or SNC-2024-118" autocomplete="off">
+      </div>
+      <button class="search-btn" id="goBtn" disabled>🔍 Search</button>
+    </div>
+    <p class="hint" id="hint">Loading records…</p>
+  </div>
+
+  <div class="card">
+    <div class="results-header">
+      <h2>Search Results</h2>
+      <div class="count" id="resultCount">Ready to search</div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead id="thead" hidden></thead>
+        <tbody id="results">
+          <tr><td class="state"><div class="state-icon">🔍</div><h3>Ready to Search</h3><p>Enter a CNIC or sanction number above</p></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerNo">
+  <div class="dhead">
+    <div><h4>SANCTION</h4><div class="no" id="drawerNo">—</div></div>
+    <button class="close" id="closeBtn" aria-label="Close">×</button>
+  </div>
+  <div class="dbody" id="drawerBody"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const LS = { data:"pmyba_data_v1", theme:"pmyba_theme_v1", session:"pmyba_session_v1" };
+
+/* =========================================================================
+   ADMIN SETTINGS — edit before publishing
+   ========================================================================= */
+const CONFIG = {
+  SHEET_ID : "1TuWd8eUVmcX4PJdgNX6KEUXHOZGmSml3",
+  TAB      : "",
+  HIDE_COLS: "D,E",
+  USERS: [
+    { username: "admin", password: "admin123", role: "admin" },
+    { username: "user",  password: "user123",  role: "user"  }
+  ]
+};
+let CURRENT_ROLE = null, CURRENT_USER = null;
+
+/* ---------------- LOGIN ---------------- */
+function checkSession(){
+  try{
+    const s = JSON.parse(sessionStorage.getItem(LS.session) || "null");
+    if(s && CONFIG.USERS.some(u => u.username === s.username)){
+      CURRENT_ROLE = s.role; CURRENT_USER = s.username;
+      showApp(); return;
+    }
+  }catch(e){}
+}
+function doLogin(){
+  const u = $("username").value.trim();
+  const p = $("password").value;
+  const err = $("loginError");
+  err.classList.remove("show");
+  if(!u || !p){ err.textContent = "Please enter both username and password"; err.classList.add("show"); return; }
+  const match = CONFIG.USERS.find(x => x.username === u && x.password === p);
+  if(!match){ err.textContent = "Invalid username or password"; err.classList.add("show"); return; }
+  CURRENT_ROLE = match.role; CURRENT_USER = match.username;
+  try{ sessionStorage.setItem(LS.session, JSON.stringify({ username: match.username, role: match.role })); }catch(e){}
+  showApp();
+}
+function showApp(){
+  $("loginContainer").hidden = true;
+  $("mainApp").hidden = false;
+  $("displayUsername").textContent = CURRENT_USER;
+  $("displayRole").textContent = CURRENT_ROLE === "admin" ? "Administrator Access" : "Member Search Access";
+  $("userAvatar").textContent = CURRENT_USER.charAt(0).toUpperCase();
+  if(CURRENT_ROLE === "admin"){
+    $("userAvatar").classList.add("admin-avatar");
+  }
+  cacheLoad();
+  if(!DB.rows.length) loadFromGoogle();
+}
+function doLogout(){
+  try{ sessionStorage.removeItem(LS.session); }catch(e){}
+  location.reload();
+}
+$("loginBtn").addEventListener("click", doLogin);
+["username","password"].forEach(id => $(id).addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); }));
+$("logoutBtn").addEventListener("click", doLogout);
+
+/* ---------------- data state ---------------- */
+let DB = { headers:[], rows:[], source:"", loadedAt:0 };
+let COLS = { cnic:-1, sanction:-1, hidden:[] };
+let LAST = { groups:[], query:"", field:"" };
+
+const norm = v => (v===null||v===undefined) ? "" : String(v).trim();
+const digits = v => norm(v).replace(/\D+/g,"");
+const key = v => norm(v).toUpperCase().replace(/\s+/g," ");
+function colLetterToIndex(s){
+  s = norm(s).toUpperCase(); if(!s) return -1;
+  if(/^\d+$/.test(s)) return parseInt(s,10)-1;
+  let n=0; for(const ch of s){ if(ch<"A"||ch>"Z") return -1; n = n*26 + (ch.charCodeAt(0)-64); }
+  return n-1;
+}
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("on"),2600); }
+function esc(s){ return norm(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function setBadge(text, state){
+  const b = $("statusBadge");
+  b.className = "badge " + (state||"loading");
+  b.innerHTML = state==="loading" ? '<span class="spinner"></span><span>'+esc(text)+'</span>' : '<span>'+esc(text)+'</span>';
+  $("statusInfo").textContent = text;
+}
+
+/* ---------------- column detection ---------------- */
+function detectColumns(){
+  const h = DB.headers.map(x => key(x).replace(/[^A-Z0-9]/g,""));
+  const find = (...cands) => {
+    for(const c of cands){ const i = h.indexOf(c); if(i>-1) return i; }
+    for(const c of cands){ const i = h.findIndex(x => x.includes(c)); if(i>-1) return i; }
+    return -1;
+  };
+  COLS.cnic = find("MEMBERCNIC","CNIC","NIC");
+  COLS.sanction = find("SANCTIONNO","SANCTION");
+  COLS.hidden = CONFIG.HIDE_COLS.split(/[,\s]+/).map(colLetterToIndex).filter(i => i>=0 && i<DB.headers.length);
+}
+
+/* ---------------- parsing / loading ---------------- */
+function parseCSV(text){
+  const rows=[]; let row=[], cur="", q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else if(c==='"') q=true;
+    else if(c===','){ row.push(cur); cur=""; }
+    else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; }
+    else if(c!=='\r') cur+=c;
+  }
+  if(cur.length||row.length){ row.push(cur); rows.push(row); }
+  return rows;
+}
+function adopt(matrix, source){
+  matrix = matrix.filter(r => r.some(c => norm(c)!==""));
+  if(!matrix.length) throw new Error("The sheet has no rows.");
+  let head = 0;
+  for(let i=0;i<Math.min(matrix.length,10);i++){
+    const j = matrix[i].map(key).join("|");
+    if(j.includes("CNIC") || j.includes("SANCTION")){ head=i; break; }
+  }
+  const headers = matrix[head].map((c,i) => norm(c) || "Column " + String.fromCharCode(65+i));
+  const width = headers.length;
+  const rows = matrix.slice(head+1).map(r => { const o=r.slice(0,width).map(norm); while(o.length<width) o.push(""); return o; });
+  DB = { headers, rows, source, loadedAt: Date.now() };
+  detectColumns();
+  if(COLS.cnic<0 && COLS.sanction<0) throw new Error("No member_cnic or sanction_no column found.");
+  cacheSave();
+  ready();
+}
+function ready(){
+  setBadge(DB.rows.length.toLocaleString() + " rows loaded · " + DB.source, "live");
+  $("goBtn").disabled = false;
+  $("hint").textContent = "Ready — search by CNIC or sanction number.";
+}
+async function loadFromGoogle(){
+  const id = CONFIG.SHEET_ID, tab = CONFIG.TAB;
+  setBadge("Loading from Google Sheets…", "loading");
+  $("hint").textContent = "Loading records…";
+  const urls = [
+    "https://docs.google.com/spreadsheets/d/"+id+"/gviz/tq?tqx=out:csv" + (tab?"&sheet="+encodeURIComponent(tab):""),
+    "https://docs.google.com/spreadsheets/d/"+id+"/export?format=csv" + (tab?"&sheet="+encodeURIComponent(tab):"")
+  ];
+  let lastErr = null;
+  for(const u of urls){
+    try{
+      const r = await fetch(u, {credentials:"omit"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const text = await r.text();
+      if(/^\s*</.test(text)) throw new Error("Sheet is not public.");
+      adopt(parseCSV(text), "Google Sheet");
+      toast("Sheet loaded.");
+      return;
+    }catch(e){ lastErr = e; }
+  }
+  setBadge("Connection failed", "err");
+  $("hint").innerHTML = "Records are unavailable right now. Please contact the administrator.";
+}
+$("refreshBtn").addEventListener("click", loadFromGoogle);
+
+/* ---------------- cache ---------------- */
+function cacheSave(){
+  try{
+    const payload = JSON.stringify(DB);
+    if(payload.length < 4_000_000) localStorage.setItem(LS.data, payload);
+  }catch(e){}
+}
+function cacheLoad(){
+  try{
+    const d = JSON.parse(localStorage.getItem(LS.data)||"null");
+    if(d && d.headers && d.rows && d.rows.length){
+      DB = d; detectColumns(); ready();
+      setBadge(DB.rows.length.toLocaleString()+" rows · cached ("+DB.source+")","live");
+    }
+  }catch(e){}
+}
+
+
+/* ---------------- search ---------------- */
+function decideField(q){
+  const mode = $("mode").value;
+  if(mode!=="auto") return mode;
+  const d = digits(q);
+  return (d.length>=11 && d.length===norm(q).replace(/[-\s]/g,"").length) ? "cnic" : "sanction";
+}
+function search(){
+  const q = $("q").value.trim();
+  if(!DB.rows.length){ toast("Data is still loading."); return; }
+  if(!q){ toast("Type a CNIC or sanction number."); return; }
+  let field = decideField(q);
+  if(field==="cnic" && COLS.cnic<0) field="sanction";
+  if(field==="sanction" && COLS.sanction<0) field="cnic";
+  const col = field==="cnic" ? COLS.cnic : COLS.sanction;
+  if(col<0){ toast("That column is missing in this sheet."); return; }
+
+  const needle = field==="cnic" ? digits(q) : key(q);
+  const hits = DB.rows.filter(r => {
+    const cell = field==="cnic" ? digits(r[col]) : key(r[col]);
+    return cell && (cell===needle || cell.includes(needle));
+  });
+
+  const map = new Map();
+  for(const r of hits){
+    const sk = COLS.sanction>=0 ? (key(r[COLS.sanction]) || "—") : "—";
+    if(!map.has(sk)) map.set(sk, { sanction: COLS.sanction>=0 ? norm(r[COLS.sanction]) : "—", rows:[] });
+    map.get(sk).rows.push(r);
+  }
+  LAST = { groups:[...map.values()], query:q, field };
+  render();
+}
+function visibleCols(){ return DB.headers.map((h,i)=>i).filter(i => !COLS.hidden.includes(i)); }
+function renderEmpty(title, sub, icon){
+  $("thead").hidden = true;
+  $("results").innerHTML = '<tr><td class="state"><div class="state-icon">'+icon+'</div><h3>'+esc(title)+'</h3><p>'+esc(sub)+'</p></td></tr>';
+  $("resultCount").textContent = "Ready to search";
+}
+function render(){
+  const g = LAST.groups;
+  if(!g.length){
+    renderEmpty("No match found", "No results for \u201c"+LAST.query+"\u201d — check the number or switch field", "\u26A0\uFE0F");
+    return;
+  }
+  const cols = visibleCols();
+  $("thead").hidden = false;
+  $("thead").innerHTML = '<tr><th>#</th>' + cols.map(i=>'<th>'+esc(DB.headers[i])+'</th>').join('') + '<th>Entries</th><th></th></tr>';
+  let body = "";
+  g.forEach((grp,gi)=>{
+    const r = grp.rows[0];
+    body += '<tr><td>'+(gi+1)+'</td>'
+      + cols.map(i=>'<td>'+esc(r[i])+'</td>').join('')
+      + '<td>'+(grp.rows.length>1?'<span class="tag">'+grp.rows.length+'</span>':grp.rows.length)+'</td>'
+      + '<td><button class="view-btn" data-g="'+gi+'">View record</button></td></tr>';
+  });
+  $("results").innerHTML = body;
+  $("results").querySelectorAll("button.view-btn").forEach(b => b.addEventListener("click",()=>openRecord(+b.dataset.g)));
+  const rowsCount = g.reduce((a,x)=>a+x.rows.length,0);
+  $("resultCount").textContent = g.length+" sanction"+(g.length>1?"s":"")+" · merged from "+rowsCount+" row"+(rowsCount>1?"s":"");
+}
+
+/* ---------------- drawer: only hidden cols (D/E) ---------------- */
+function openRecord(gi){
+  const grp = LAST.groups[gi]; if(!grp) return;
+  $("drawerNo").textContent = grp.sanction || "—";
+  let html = "";
+  grp.rows.forEach((r,ri)=>{
+    html += '<div class="entry"><div class="eh">Entry '+(ri+1)+' of '+grp.rows.length+'</div><div class="fields">';
+    COLS.hidden.forEach(i=>{
+      html += '<div class="field"><div class="k">'+esc(DB.headers[i])+'</div><div class="v">'+(esc(r[i])||"—")+'</div></div>';
+    });
+    html += '</div></div>';
+  });
+  $("drawerBody").innerHTML = html;
+  $("drawer").classList.add("on"); $("scrim").classList.add("on");
+}
+function closeRecord(){ $("drawer").classList.remove("on"); $("scrim").classList.remove("on"); }
+$("closeBtn").addEventListener("click", closeRecord);
+$("scrim").addEventListener("click", closeRecord);
+document.addEventListener("keydown", e => { if(e.key==="Escape") closeRecord(); });
+
+/* ---------------- wiring ---------------- */
+$("goBtn").addEventListener("click", search);
+$("q").addEventListener("keydown", e => { if(e.key==="Enter") search(); });
+$("mode").addEventListener("change", ()=>{ if($("q").value.trim()) search(); });
+
+
+checkSession();
+</script>
+</body>
+</html>
